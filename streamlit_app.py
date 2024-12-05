@@ -7,7 +7,5 @@ import xmltodict
 
 st.title("2030 District Constellation Uploader")
 st.write(
-    "go my minions!"
-     uploaded_file = st.file_uploader("Upload an excel file of constellation here", type="xls")
-     
-)
+    "go my minions!")
+uploaded_file = st.file_uploader("Upload your excel file", type="xls")
