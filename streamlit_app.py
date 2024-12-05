@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("2030 District Constellation Uploader")
+st.title("🎈 My new app")
 st.write(
     "go"
 )
