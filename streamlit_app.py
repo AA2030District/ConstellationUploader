@@ -70,6 +70,7 @@ def customidfinder(espmdict):
             for number in totaldf['startDate']:
                 newdf = newdf.drop(newdf[newdf['CycleStartDate'] == number].index)
         headers = {'Content-Type': 'application/xml'}
+        console.write(id2)
         for index,row in newdf.iterrows():
             if pd.isna(row['TotalCharges']) == True:
                 row['TotalCharges'] =0
@@ -84,7 +85,6 @@ def customidfinder(espmdict):
             xml = xml.format(usage=str(row['FeeVolume']),date1=str(row['CycleStartDate']).rsplit(' ',1)[0],date2=str(row['CycleEndDate']).rsplit(' ',1)[0],price=str(row['TotalCharges']))
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
-            console.write(id)
             print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
 
     return faillist
