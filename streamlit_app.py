@@ -109,7 +109,7 @@ if st.button("Run Program"):
     failaddressfinder(faillist)
     console.write("Finished!")
 
-with st.expander(label="Tutorial",icon="open_book"):
+with st.expander(label="Tutorial",icon=":open_book:"):
     st.write("Tutorial Goes Here!")
 
 
