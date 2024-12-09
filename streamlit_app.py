@@ -64,9 +64,8 @@ def customidfinder(espmdict):
                 dflist.append(df_dict)
             totaldf=pd.concat(dflist)
         except KeyError:
-             st.write("No Meter entries found for the following meter at the following espm id")
-             st.write(id)
-             st.write(id2)
+             errors.write("No Meter Match found for the meter:",id)
+             errors.write("Check if your ESPM Custom Download is up to date. If you aren't trying to upload this meter to ESPM, there is nothing wrong.")
         if totaldf.empty == False:
             for number in totaldf['startDate']:
                 newdf = newdf.drop(newdf[newdf['CycleStartDate'] == number].index)
@@ -85,13 +84,13 @@ def customidfinder(espmdict):
             xml = xml.format(usage=str(row['FeeVolume']),date1=str(row['CycleStartDate']).rsplit(' ',1)[0],date2=str(row['CycleEndDate']).rsplit(' ',1)[0],price=str(row['TotalCharges']))
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
-            print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
+            console.write(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
 
     return faillist
 def failaddressfinder(faillist):
     condict={}
     if len(faillist)>=1:
-        st.write("The Following Constellation ID's do not have an ESPM meter equivalent: - Check if the building is in Energy Star or if the meters have constellation ID in the 1st custom ID slot. Otherwise try updating your input files.:")
+        errors.write("The Following Constellation ID's do not have an ESPM meter equivalent: - Check if the building is in Energy Star or if the meters have constellation ID in the 1st custom ID slot. Otherwise try updating your input files.:")
         condf = pd.read_excel(inputfile)
         for index,row in condf.iterrows():
             if row['MeterNumber'] not in faillist:
@@ -100,10 +99,11 @@ def failaddressfinder(faillist):
             condict.update({row['MeterNumber']:row['street']})
         for item in condict:
             str="Address:{address}, Constellation ID:{conid}"
-            st.write(str.format(address=condict[item],conid=item))
+            errors.write(str.format(address=condict[item],conid=item))
 
 if st.button("Run Program"):
+    console.write("Beginning Upload")
     idmatchlist=espmidmatcher()
     faillist=customidfinder(idmatchlist)
     failaddressfinder(faillist)
-    st.write("Finished!")
+    console.write("Finished!")
