@@ -10,3 +10,9 @@ st.write(
     "go my minions!")
 uploaded_file = st.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
 uploaded_file2 = st.file_uploader("Upload your constellation file here", type="xlsx")
+
+def espmidmatcher():
+    st.write("this button works!")
+
+if st.button("Run Program"):
+    espmidmatcher()
