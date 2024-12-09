@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 import xml.etree.ElementTree as et
 import xmltodict
 st.set_page_config(page_title='A2 2030 District Constellation Uploader',layout="wide")
-upload,errors,console = st.columns(1,2,2)
+upload,errors,console = st.columns([.3,.4,.4])
 
 upload.title("2030 District Constellation Uploader")
 upload.subheader("Upload your files here.")
@@ -85,7 +85,6 @@ def customidfinder(espmdict):
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
             print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
-
     return faillist
 def failaddressfinder(faillist):
     condict={}
