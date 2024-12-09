@@ -8,7 +8,7 @@ st.set_page_config(
      page_title='Streamlit cheat sheet',
      layout="wide",)
 st.title("2030 District Constellation Uploader")
-upload,errors,console=st.columns([.5,.25,.25])
+upload,errors,console=st.columns([.4,.3,.3])
 upload.subheader("Upload your files here.")
 errors.subheader("Errors:")
 console.subheader("Console Messages:")
@@ -44,6 +44,7 @@ def customidfinder(espmdict):
     for item in meteriddict.keys():
         try:
             meterlist.update({item:espmdict[str(item)]})
+            console.write(item)
         except KeyError:
             faillist.append(item)
         except Exception as error:
@@ -70,7 +71,6 @@ def customidfinder(espmdict):
             for number in totaldf['startDate']:
                 newdf = newdf.drop(newdf[newdf['CycleStartDate'] == number].index)
         headers = {'Content-Type': 'application/xml'}
-        console.write(id2)
         for index,row in newdf.iterrows():
             if pd.isna(row['TotalCharges']) == True:
                 row['TotalCharges'] =0
