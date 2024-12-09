@@ -7,7 +7,7 @@ import xmltodict
 st.set_page_config(
      page_title='Streamlit cheat sheet',
      layout="wide",)
-st.logo("Washtenaw-AA-5-Established-Logo.jpg")
+st.image("/workspaces/ConstellationUploader/Washtenaw-AA-5-Established-Logo.jpg")
 st.title("2030 District Constellation Uploader")
 upload,errors,console=st.columns([.4,.3,.3])
 upload.subheader("Upload your files here.")
