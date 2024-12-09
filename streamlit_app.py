@@ -4,18 +4,12 @@ import requests
 from requests.auth import HTTPBasicAuth 
 import xml.etree.ElementTree as et
 import xmltodict
-st.set_page_config(page_title='A2 2030 District Constellation Uploader',layout="wide")
-upload,errors,console = st.columns([.3,.4,.4])
 
-upload.title("2030 District Constellation Uploader")
-upload.subheader("Upload your files here.")
-errors.subheader("Errors:")
-console.subheader("Console:")
-
-#custom download THEN constellation file
-with upload:
-    espmfile   = st.file_uploader("Upload the 'Custom Download of the ESPM meters you are updating here", type="xlsx")
-    inputfile = st.file_uploader("Upload your constellation file here.", type="xlsx")
+st.title("2030 District Constellation Uploader")
+st.write(
+    "go my minions!")
+espmfile   = st.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
+inputfile = st.file_uploader("Upload your constellation file here", type="xlsx")
 
 def espmidmatcher():
     esdf = pd.read_excel(espmfile,'Meters')
@@ -32,6 +26,7 @@ def espmidmatcher():
     for property in esdf.iloc:
         espmdict.update({property['Custom Meter ID 1 Value']:[property['Portfolio Manager ID'],property['Portfolio Manager Meter ID']]})
         counter+=1
+    st.write(espmdict)
     return espmdict
 
 def customidfinder(espmdict):       
@@ -48,7 +43,7 @@ def customidfinder(espmdict):
         except KeyError:
             faillist.append(item)
         except Exception as error:
-            errors.write("An Error Occured:",type(error).__name__)
+            st.write("An Error Occured:",type(error).__name__)
             exit()
     totaldf=pd.DataFrame
     dflist=[]
@@ -65,13 +60,13 @@ def customidfinder(espmdict):
                 dflist.append(df_dict)
             totaldf=pd.concat(dflist)
         except KeyError:
-             errors.write("No Meter Match found for the meter:",id)
-             errors.write("Check if your ESPM Custom Download is up to date. If you aren't trying to upload this meter to ESPM, there is nothing wrong.")
+             st.write("No Meter entries found for the following meter at the following espm id")
+             st.write(id)
+             st.write(id2)
         if totaldf.empty == False:
             for number in totaldf['startDate']:
                 newdf = newdf.drop(newdf[newdf['CycleStartDate'] == number].index)
         headers = {'Content-Type': 'application/xml'}
-        console.write("Uploading meter ",id,)
         for index,row in newdf.iterrows():
             if pd.isna(row['TotalCharges']) == True:
                 row['TotalCharges'] =0
@@ -87,11 +82,12 @@ def customidfinder(espmdict):
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
             print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
+
     return faillist
 def failaddressfinder(faillist):
     condict={}
     if len(faillist)>=1:
-        errors.write("The Following Constellation ID's do not have an ESPM meter equivalent:")
+        st.write("The Following Constellation ID's do not have an ESPM meter equivalent: - Check if the building is in Energy Star or if the meters have constellation ID in the 1st custom ID slot. Otherwise try updating your input files.:")
         condf = pd.read_excel(inputfile)
         for index,row in condf.iterrows():
             if row['MeterNumber'] not in faillist:
@@ -100,11 +96,10 @@ def failaddressfinder(faillist):
             condict.update({row['MeterNumber']:row['street']})
         for item in condict:
             str="Address:{address}, Constellation ID:{conid}"
-            errors.write(str.format(address=condict[item],conid=item))
+            st.write(str.format(address=condict[item],conid=item))
 
 if st.button("Run Program"):
-    console.write("Beginning upload")
     idmatchlist=espmidmatcher()
     faillist=customidfinder(idmatchlist)
     failaddressfinder(faillist)
-    console.write("Finished!")
+    st.write("Finished!")
