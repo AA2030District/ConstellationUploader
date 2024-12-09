@@ -4,10 +4,14 @@ import requests
 from requests.auth import HTTPBasicAuth 
 import xml.etree.ElementTree as et
 import xmltodict
+from PIL import Image
+
 st.set_page_config(
-     page_title='Streamlit cheat sheet',
+     page_title='2030 District Constellation Uploader',
      layout="wide",)
-st.image("Washtenaw-AA-5-Established-Logo.jpg")
+
+image = Image.open("Washtenaw-AA-5-Established-Logo.jpg")
+st.logo(image)
 st.title("2030 District Constellation Uploader")
 upload,errors,console=st.columns([.4,.3,.3])
 upload.subheader("Upload your files here.")
@@ -112,5 +116,3 @@ if st.button("Run Program"):
 
 with st.expander(label="Tutorial :open_book:"):
     st.write("Tutorial Goes Here!")
-
-

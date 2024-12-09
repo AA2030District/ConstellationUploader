@@ -3,3 +3,4 @@ openpyxl==3.1.2
 pandas==2.2.3
 Requests==2.32.3
 xmltodict==0.13.0
+pymongo[srv]==3.12
