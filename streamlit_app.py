@@ -9,8 +9,12 @@ st.set_page_config(
      layout="wide",)
 st.title("2030 District Constellation Uploader")
 upload,errors,console=st.columns([.4,.3,.3])
-espmfile   = st.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
-inputfile = st.file_uploader("Upload your constellation file here", type="xlsx")
+upload.subheader("Upload your files here.")
+errors.subheader("Errors:")
+console.subheader("Console Messages:")
+espmfile   = upload.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
+inputfile = upload.file_uploader("Upload your constellation file here", type="xlsx")
+
 
 def espmidmatcher():
     esdf = pd.read_excel(espmfile,'Meters')
@@ -27,7 +31,6 @@ def espmidmatcher():
     for property in esdf.iloc:
         espmdict.update({property['Custom Meter ID 1 Value']:[property['Portfolio Manager ID'],property['Portfolio Manager Meter ID']]})
         counter+=1
-    st.write(espmdict)
     return espmdict
 
 def customidfinder(espmdict):       
@@ -44,7 +47,7 @@ def customidfinder(espmdict):
         except KeyError:
             faillist.append(item)
         except Exception as error:
-            st.write("An Error Occured:",type(error).__name__)
+            errors.write("An Error Occured:",type(error).__name__)
             exit()
     totaldf=pd.DataFrame
     dflist=[]
