@@ -10,7 +10,7 @@ st.set_page_config(
      page_title='2030 District Constellation Uploader',
      layout="wide",)
 
-image = Image.open("Washtenaw-AA-5-Established-Logo.jpg")
+image = Image.open("logo.jpg")
 st.logo(image)
 st.title("2030 District Constellation Uploader")
 upload,errors,console=st.columns([.4,.3,.3])
