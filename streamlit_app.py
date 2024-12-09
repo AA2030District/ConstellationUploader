@@ -108,3 +108,8 @@ if st.button("Run Program"):
     faillist=customidfinder(idmatchlist)
     failaddressfinder(faillist)
     console.write("Finished!")
+
+with st.expander(Tutorial, expanded=False, icon=":notebook:"):
+    st.write("Tutorial Goes Here!")
+
+
