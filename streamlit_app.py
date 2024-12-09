@@ -62,7 +62,7 @@ def customidfinder(espmdict):
         newdf = condf.loc[condf['MeterNumber']==entry]
         id=str(meterlist[entry][1])
         id2=str(meterlist[entry][0])
-        response=requests.get('https://portfoliomanager.energystar.gov/ws/meter/'+id+'/consumptionData',auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'))
+        response=requests.get('https://portfoliomanager.energystar.gov/ws/meter/'+id+'/consumptionData',auth=HTTPBasicAuth(user,password))
         dict_data = xmltodict.parse(response.content)
         try:
             for item in dict_data['meterData']['meterConsumption']:
@@ -90,7 +90,7 @@ def customidfinder(espmdict):
             xml = xml.format(usage=str(row['FeeVolume']),date1=str(row['CycleStartDate']).rsplit(' ',1)[0],date2=str(row['CycleEndDate']).rsplit(' ',1)[0],price=str(row['TotalCharges']))
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
-            print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
+            print(requests.post(url,auth=HTTPBasicAuth(user,password), data=xml, headers=headers).text)
 
     return faillist
 def failaddressfinder(faillist):
