@@ -9,6 +9,8 @@ upload,errors,console = st.columns([.3,.4,.4])
 
 upload.title("2030 District Constellation Uploader")
 upload.subheader("Upload your files here.")
+errors.subheader("Errors:")
+console.subheader("Console:")
 
 #custom download THEN constellation file
 with upload:
