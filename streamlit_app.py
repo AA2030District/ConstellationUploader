@@ -4,10 +4,11 @@ import requests
 from requests.auth import HTTPBasicAuth 
 import xml.etree.ElementTree as et
 import xmltodict
-
+st.set_page_config(
+     page_title='Streamlit cheat sheet',
+     layout="wide",)
 st.title("2030 District Constellation Uploader")
-st.write(
-    "go my minions!")
+upload,errors,console=st.columns([.4,.3,.3])
 espmfile   = st.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
 inputfile = st.file_uploader("Upload your constellation file here", type="xlsx")
 
