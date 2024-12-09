@@ -64,7 +64,8 @@ def customidfinder(espmdict):
                 dflist.append(df_dict)
             totaldf=pd.concat(dflist)
         except KeyError:
-             errors.write("No Meter Match found for the meter:",id)
+             errors.write("No Meter Match found for the meter:")
+             errors.write(id)
              errors.write("Check if your ESPM Custom Download is up to date. If you aren't trying to upload this meter to ESPM, there is nothing wrong.")
         if totaldf.empty == False:
             for number in totaldf['startDate']:
