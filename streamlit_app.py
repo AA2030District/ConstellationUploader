@@ -8,7 +8,7 @@ st.set_page_config(
      page_title='Streamlit cheat sheet',
      layout="wide",)
 st.title("2030 District Constellation Uploader")
-upload,errors,console=st.columns([.4,.3,.3])
+upload,errors,console=st.columns([.5,.25,.25])
 upload.subheader("Upload your files here.")
 errors.subheader("Errors:")
 console.subheader("Console Messages:")
@@ -64,9 +64,8 @@ def customidfinder(espmdict):
                 dflist.append(df_dict)
             totaldf=pd.concat(dflist)
         except KeyError:
-             errors.write("No Meter Match found for the meter:")
-             errors.write(id)
-             errors.write("Check if your ESPM Custom Download is up to date. If you aren't trying to upload this meter to ESPM, there is nothing wrong.")
+             print("meternotfound")
+             print(id)
         if totaldf.empty == False:
             for number in totaldf['startDate']:
                 newdf = newdf.drop(newdf[newdf['CycleStartDate'] == number].index)
@@ -85,7 +84,8 @@ def customidfinder(espmdict):
             xml = xml.format(usage=str(row['FeeVolume']),date1=str(row['CycleStartDate']).rsplit(' ',1)[0],date2=str(row['CycleEndDate']).rsplit(' ',1)[0],price=str(row['TotalCharges']))
             url='https://portfoliomanager.energystar.gov/ws/meter/{meterid}/consumptionData'
             url=url.format(meterid=id)
-            console.write(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
+            console.write(id)
+            print(requests.post(url,auth=HTTPBasicAuth('AA2030 District','fH5-gqT-qL9-BW6'), data=xml, headers=headers).text)
 
     return faillist
 def failaddressfinder(faillist):
@@ -103,7 +103,7 @@ def failaddressfinder(faillist):
             errors.write(str.format(address=condict[item],conid=item))
 
 if st.button("Run Program"):
-    console.write("Beginning Upload")
+    console.write("Beginning Upload of Meters:")
     idmatchlist=espmidmatcher()
     faillist=customidfinder(idmatchlist)
     failaddressfinder(faillist)
