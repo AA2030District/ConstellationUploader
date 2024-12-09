@@ -11,7 +11,7 @@ st.set_page_config(
      layout="wide",)
 
 image = Image.open("logo.jpg")
-st.logo(image,size=large)
+st.logo(image,size="large")
 st.title("2030 District Constellation Uploader")
 upload,errors,console=st.columns([.4,.3,.3])
 upload.subheader("Upload your files here.")
