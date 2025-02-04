@@ -116,4 +116,7 @@ if st.button("Run Program"):
     console.write("Finished!")
 
 with st.expander(label="Tutorial :open_book:"):
-    st.write("Tutorial Goes Here!")
+    st.write("To begin, you will need a custom ESPM download of all the properties you want to upload gas data to and the constellation file containing the data you want to upload.")
+    st.write("To get this ESPM custom download, go to Energy Star - custom download, select the properties you wish to upload data to and then include basic property information AND Meters")
+    st.write("Upload both files to their places in the uploader, enter your username and password and press run! Any errors or console messages should appear to the right. ")
+    st.write("contact bros@2030districts.org with any questions!")
