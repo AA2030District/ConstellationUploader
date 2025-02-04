@@ -19,8 +19,8 @@ errors.subheader("Errors:")
 console.subheader("Console Messages:")
 espmfile   = upload.file_uploader("Upload your download of properties you wish to address here", type="xlsx")
 inputfile = upload.file_uploader("Upload your constellation file here", type="xlsx")
-user = upload.text_input("Energy Star Username")
-password = upload.text_input("Energy Star Password")
+user = upload.text_input("Energy Star Username",type="password")
+password = upload.text_input("Energy Star Password",type="password")
 
 def espmidmatcher():
     esdf = pd.read_excel(espmfile,'Meters')
