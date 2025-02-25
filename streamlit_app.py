@@ -103,7 +103,10 @@ def failaddressfinder(faillist):
             if row['MeterNumber'] not in faillist:
                 condf.drop(index,inplace=True)
         for index,row in condf.iterrows():
-            condict.update({row['MeterNumber']:row['street']})
+            try:
+                condict.update({row['MeterNumber']:row['street']})
+            except:
+                condict.update({row['MeterNumber']:"No Street Found"})
         for item in condict:
             str="Address:{address}, Constellation ID:{conid}"
             errors.write(str.format(address=condict[item],conid=item))
